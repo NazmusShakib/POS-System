@@ -232,10 +232,10 @@ $finalcode='RS-'.createRandomPassword();
 						<tr>
 							<th width="12%"> Brand Name </th>
 							<th width="14%"> Generic Name </th>
+							<th width="14%"> Part Number </th>
 							<th width="13%"> Category / Description </th>
 							<th width="7%"> Supplier </th>
 							<th width="9%"> Date Received </th>
-							<th width="10%"> Expiry Date </th>
 							<th width="6%"> Original Price </th>
 							<th width="6%"> Selling Price </th>
 							<th width="6%"> QTY </th>
@@ -288,10 +288,10 @@ $finalcode='RS-'.createRandomPassword();
 						?>
 						<td><?php echo $row['product_code']; ?></td>
 						<td><?php echo $row['gen_name']; ?></td>
-						<td><?php echo $row['product_name']; ?></td>
-								<td><?php echo $row['supplier']; ?></td>
-						<td><?php echo $row['date_arrival']; ?></td>
 						<td><?php echo $row['expiry_date']; ?></td>
+						<td><?php echo $row['product_name']; ?></td>
+						<td><?php echo $row['supplier']; ?></td>
+						<td><?php echo $row['date_arrival']; ?></td>
 						<td><?php
 						$oprice=$row['o_price'];
 						echo formatMoney($oprice, true);

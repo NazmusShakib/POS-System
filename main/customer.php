@@ -163,7 +163,7 @@ $finalcode=''.createRandomPassword();
 			<th width="10%"> Contact Number</th>
 			<th width="23%"> Product Name</th>
 			<th width="9%"> Total </th>
-			<th width="17%"> Note </th>
+			<th width="17%"> Accounting </th>
 			<th width="9%"> Due Date </th>
 			<th width="14%"> Action </th>
 		</tr>

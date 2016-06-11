@@ -8,7 +8,7 @@
 <span>Contact : </span><input type="text" style="width:265px; height:30px;" name="contact" placeholder="Contact"/><br>
 <span>Product Name : </span><textarea style="height:70px; width:265px;" name="prod_name"></textarea><br>
 <span>Total: </span><input type="text" style="width:265px; height:30px;" name="memno" placeholder="Total"/><br>
-<span>Note : </span><textarea style="height:60px; width:265px;" name="note"></textarea><br>
+<span>Accounting : </span><textarea style="height:60px; width:265px;" name="note"></textarea><br>
 <span>Expected Date: </span><input type="date" style="width:265px; height:30px;" name="date" placeholder="Date"/><br>
 <div style="float:right; margin-right:10px;">
 <button class="btn btn-success btn-block btn-large" style="width:267px;"><i class="icon icon-save icon-large"></i> Save</button>

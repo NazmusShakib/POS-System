@@ -198,7 +198,7 @@ $finalcode=''.createRandomPassword();
 			<th> Contact Person </th>
 			<th> Address </th>
 			<th> Contact No.</th>
-			<th> Note</th>
+			<th> Accounting </th>
 			<th width="120"> Action </th>
 		</tr>
 	</thead>

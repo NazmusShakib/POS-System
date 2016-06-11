@@ -195,7 +195,7 @@ $finalcode='RS-'.createRandomPassword();
 				<th> Product Name </th>
 				<th> Qty </th>
 				<th> Price </th>
-				<th> Discount </th>
+				<!--th> Discount </th-->
 				<th> Amount </th>
 			</tr>
 		</thead>
@@ -210,23 +210,23 @@ $finalcode='RS-'.createRandomPassword();
 				<tr class="record">
 				<td><?php echo $row['product_code']; ?></td>
 				<td><?php echo $row['name']; ?></td>
-				<td><?php echo $row['qty']; ?></td>
+				<td><?php echo '<input type="number" value="'.$row['qty'].'"\>'; ?></td>
 				<td>
 				<?php
-				$ppp=$row['price'];
-				echo formatMoney($ppp, true);
+					$ppp=$row['price'];
+					echo '<input type="text" value="'.formatMoney($ppp, true).'"\>';
 				?>
 				</td>
-				<td>
+				<!--td>
 				<?php
-				$ddd=$row['discount'];
-				echo formatMoney($ddd, true);
+					//$ddd=$row['discount'];
+					//echo formatMoney($ddd, true);
 				?>
-				</td>
+				</td-->
 				<td>
 				<?php
 				$dfdf=$row['amount'];
-				echo formatMoney($dfdf, true);
+				echo '<input type="text" value="'.formatMoney($dfdf, true).'"\>';
 				?>
 				</td>
 				</tr>
@@ -234,8 +234,8 @@ $finalcode='RS-'.createRandomPassword();
 					}
 				?>
 				<tr>
-					<td colspan="5" style=" text-align:right;"><strong style="font-size: 12px;">Total: &nbsp;</strong></td>
-					<td colspan="2"><strong style="font-size: 12px;">
+					<td colspan="4" style="text-align:right;"><strong style="font-size: 12px;">Total: &nbsp;</strong></td>
+					<td colspan="1"><strong style="font-size: 12px;">
 					<?php
 					$sdsd=$_GET['invoice'];
 					$resultas = $db->prepare("SELECT sum(amount) FROM sales_order WHERE invoice= :a");
@@ -243,7 +243,7 @@ $finalcode='RS-'.createRandomPassword();
 					$resultas->execute();
 					for($i=0; $rowas = $resultas->fetch(); $i++){
 					$fgfg=$rowas['sum(amount)'];
-					echo formatMoney($fgfg, true);
+					echo '<input type="text" value="'.formatMoney($fgfg, true).'"\>';
 					}
 					?>
 					</strong></td>
@@ -251,10 +251,10 @@ $finalcode='RS-'.createRandomPassword();
 				<?php if($pt=='cash'){
 				?>
 				<tr>
-					<td colspan="5"style=" text-align:right;"><strong style="font-size: 12px; color: #222222;">Cash Tendered:&nbsp;</strong></td>
-					<td colspan="2"><strong style="font-size: 12px; color: #222222;">
+					<td colspan="4"style=" text-align:right;"><strong style="font-size: 12px; color: #222222;">Cash Tendered:&nbsp;</strong></td>
+					<td colspan="1"><strong style="font-size: 12px; color: #222222;">
 					<?php
-					echo formatMoney($cash, true);
+						echo '<input type="text" value="'.formatMoney($cash, true).'"\>';
 					?>
 					</strong></td>
 				</tr>
@@ -262,18 +262,18 @@ $finalcode='RS-'.createRandomPassword();
 				}
 				?>
 				<tr>
-					<td colspan="5" style=" text-align:right;"><strong style="font-size: 12px; color: #222222;">
+					<td colspan="4" style=" text-align:right;"><strong style="font-size: 12px; color: #222222;">
 					<font style="font-size:20px;">
 					<?php
-					if($pt=='cash'){
-					echo 'Change:';
-					}
-					if($pt=='credit'){
-					echo 'Due Date:';
-					}
+						if($pt=='cash'){
+						echo 'Change:';
+						}
+						if($pt=='credit'){
+						echo 'Due Date:';
+						}
 					?>&nbsp;
 					</strong></td>
-					<td colspan="2"><strong style="font-size: 15px; color: #222222;">
+					<td colspan="1"><strong style="font-size: 15px; color: #222222;">
 					<?php
 					function formatMoney($number, $fractional=false) {
 						if ($fractional) {
@@ -293,7 +293,7 @@ $finalcode='RS-'.createRandomPassword();
 					echo $cash;
 					}
 					if($pt=='cash'){
-					echo formatMoney($amount, true);
+					echo '<input type="text" value="'.formatMoney($amount, true).'"\>';
 					}
 					?>
 					</strong></td>

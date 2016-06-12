@@ -39,9 +39,7 @@
 </select><br>
 <span>QTY Left: </span><input type="number" style="width:265px; height:40px;" min="0" name="qty" value="<?php echo $row['qty']; ?>" /><br>
 <span>Quantity: </span><input type="number" style="width:265px; height:40px;" min="0" name="sold" value="<?php echo $row['qty_sold']; ?>" /><br>
-
 <div style="float:right; margin-right:10px;">
-
 <button class="btn btn-success btn-block btn-large" style="width:267px;"><i class="icon icon-save icon-large"></i> Save Changes</button>
 </div>
 </div>

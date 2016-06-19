@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-<title>
-POS
-</title>
+
+<title> POS </title>
+
 <link rel="icon" href="images/favicon-96x96.png" type="png/image/x-icon">
 <?php 
 require_once('auth.php');
@@ -36,55 +36,68 @@ require_once('auth.php');
 	
 	<script src="lib/jquery.min.js" type="text/javascript"></script>
 	<script src="lib/bootstrap.min.js" type="text/javascript"></script>
-	
-	
+
 	<script src="src/facebox.js" type="text/javascript"></script>
     <link href="vendors/uniform.default.css" rel="stylesheet" media="screen"/>
 
+	<script language="javascript" type="text/javascript">
+		/* Visit http://www.yaldex.com/ for full source code
+		and get more free JavaScript, CSS and DHTML scripts! */
+		<!-- Begin
+		var timerID = null;
+		var timerRunning = false;
+		function stopclock (){
+		if(timerRunning)
+		clearTimeout(timerID);
+		timerRunning = false;
+		}
+		function showtime () {
+			var now = new Date();
+			var hours = now.getHours();
+			var minutes = now.getMinutes();
+			var seconds = now.getSeconds()
+			var timeValue = "" + ((hours >12) ? hours -12 :hours)
+			if (timeValue == "0") timeValue = 12;
+			timeValue += ((minutes < 10) ? ":0" : ":") + minutes
+			timeValue += ((seconds < 10) ? ":0" : ":") + seconds
+			timeValue += (hours >= 12) ? " P.M." : " A.M."
+			document.clock.face.value = timeValue;
+			timerID = setTimeout("showtime()",1000);
+			timerRunning = true;
+		}
+		function startclock() {
+			stopclock();
+			showtime();
+		}
+		window.onload=startclock;
+		// End -->
 
- <script language="javascript" type="text/javascript">
-/* Visit http://www.yaldex.com/ for full source code
-and get more free JavaScript, CSS and DHTML scripts! */
-<!-- Begin
-var timerID = null;
-var timerRunning = false;
-function stopclock (){
-if(timerRunning)
-clearTimeout(timerID);
-timerRunning = false;
-}
-function showtime () {
-var now = new Date();
-var hours = now.getHours();
-var minutes = now.getMinutes();
-var seconds = now.getSeconds()
-var timeValue = "" + ((hours >12) ? hours -12 :hours)
-if (timeValue == "0") timeValue = 12;
-timeValue += ((minutes < 10) ? ":0" : ":") + minutes
-timeValue += ((seconds < 10) ? ":0" : ":") + seconds
-timeValue += (hours >= 12) ? " P.M." : " A.M."
-document.clock.face.value = timeValue;
-timerID = setTimeout("showtime()",1000);
-timerRunning = true;
-}
-function startclock() {
-stopclock();
-showtime();
-}
-window.onload=startclock;
-// End -->
-</SCRIPT>	
+		jQuery(document).ready(function($) {
+			$('a[rel*=facebox]').facebox({
+			  loadingImage : 'src/loading.gif',
+			  closeImage   : 'src/closelabel.png'
+			})
+		})
 
-
-<script type="text/javascript">
-  jQuery(document).ready(function($) {
-	$('a[rel*=facebox]').facebox({
-	  loadingImage : 'src/loading.gif',
-	  closeImage   : 'src/closelabel.png'
-	})
-  })
-</script>
-
+		function fetch_select(val)
+		{
+		   $.ajax({
+		     type: 'post',
+		     url: 'sales_page_ajaxQty.php',
+		     data: {
+		       get_option: $("#proSelect").val()
+		     },
+		     success: function (response) {
+		     
+		     $("#qty_left").attr({
+				   "max" : response,
+				   "min" : 1
+				});
+		       //document.getElementById("max_qty").innerHTML=response;
+		     }
+		   });
+		}
+	</script>
 
 </head>
 <?php
@@ -109,6 +122,10 @@ function createRandomPassword() {
 $finalcode=''.createRandomPassword();
 ?>
 <body>
+
+
+<?php echo $max; ?>
+
 <div id="wrapper">
 <?php include('navfixed.php');?>
 	    <div id="sidebar-wrapper" style="background-color: #3C3C3C !important;">
@@ -134,9 +151,8 @@ $finalcode=''.createRandomPassword();
 		
 		<a href="#menu-toggle" class="btn btn-info glyphicon glyphicon-menu-hamburger" id="menu-toggle"></a>
 			<i class="icon-money"></i> Sales
-
 			<ul class="breadcrumb">
-			<li><a href="index.php">Dashboard</a></li> /
+			<li><a href="index.php"> Dashboard</a></li> /
 			<li class="">Sales&nbsp;&nbsp;</li>
 			</ul>		
 <div id="page-content-wrapper">		
@@ -149,29 +165,27 @@ $finalcode=''.createRandomPassword();
 	<form action="incoming.php" method="post" >			
 		<input type="hidden" name="pt" value="<?php echo $_GET['id']; ?>" />
 		<input type="hidden" name="invoice" value="<?php echo $_GET['invoice']; ?>" />
-		<select name="product" class="chzn-select" required>
+		<select onchange="fetch_select(this.value);" name="product" id="proSelect" class="chzn-select" required>
 		<option ></option>
 			<?php
 			include('../connect.php');
-			$result = $db->prepare("SELECT * FROM products where qty > 0");
+			$result = $db->prepare("SELECT * FROM products");
 				$result->bindParam(':userid', $res);
 				$result->execute();
 				for($i=0; $row = $result->fetch(); $i++){
 			?>
-				<option value="<?php echo $row['product_id'];?>"><?php echo $row['product_code']; ?> - <?php echo $row['gen_name']; ?> - <?php echo $row['product_name']; ?> | Part Number: <?php echo $row['expiry_date']; ?> | Qty left: <?php echo $row['qty']; ?></option>
+			<option value="<?php echo $row['product_id'];?>"><?php echo $row['product_code']; ?> - <?php echo $row['gen_name']; ?> - <?php echo $row['product_name']; ?> | Part Number: <?php echo $row['expiry_date']; ?> | Qty left: <?php echo $row['qty']; ?></option>
 			<?php
-						}
-					?>
+				}
+			?>
 		</select>
-		<input type="number" name="qty" value="1" min="1"  max="<?php echo $row['qty']; ?>" placeholder="Qty" autocomplete="off" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;" required />
-		
 
-		<input type="hidden" name="discount" value="" autocomplete="off" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;" />				
-
-		
+		<input type="number" name="qty" value="1" id="qty_left" min="1" max="" placeholder="Qty" autocomplete="off" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;" required />
+		<input type="hidden" name="discount" value="" autocomplete="off" style="width: 68px; height:30px; padding-top:6px; padding-bottom: 4px; margin-right: 4px; font-size:15px;" />
 		<input type="hidden" name="date" value="<?php echo date("m/d/y"); ?>" />
 		<Button type="submit" class="btn btn-info" style="width: 123px; height:35px; margin-top:-5px;" ><i class="icon-plus-sign icon-large"></i> Add</button>
 	</form>
+
 <table class="table table-bordered" id="resultTable" data-responsive="table">
 	<thead>
 		<tr>
@@ -280,9 +294,9 @@ $finalcode=''.createRandomPassword();
 				</td-->
 				<th></th>
 			</tr>
-		
 	</tbody>
-</table><br/>
+</table>
+<br/>
 <a rel="facebox" href="checkout.php?pt=<?php echo $_GET['id']?>&invoice=<?php echo $_GET['invoice']?>&total=<?php echo $fgfg ?>&totalprof=<?php echo $asd ?>&cashier=<?php echo $_SESSION['SESS_FIRST_NAME']?>"><button class="btn btn-success btn-large btn-block"><i class="icon icon-save icon-large"></i> SAVE</button></a>
 
 <div class="clearfix"></div>
